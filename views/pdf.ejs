@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+    :root {
+      --ocean: #003366;
+      --ocean-mid: #005b8e;
+      --cyan: #0097b2;
+      --light-cyan: #e0f7ff;
+      --text: #1a2a3a;
+      --muted: #4a6070;
+      --border: #b0d4e8;
+      --accent: #00b4d8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      color: var(--text);
+      background: #fff;
+      font-size: 11pt;
+      line-height: 1.7;
+    }
+
+    /* ============================
+       COVER PAGE
+       ============================ */
+    .cover {
+      page-break-after: always;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #001529 0%, #003366 50%, #005b8e 100%);
+      color: #fff;
+    }
+
+    .cover-top-bar {
+      height: 6px;
+      background: linear-gradient(90deg, #00f5d4, #00b4d8, #0068a0);
+    }
+
+    .cover-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 80px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cover-deco {
+      font-size: 90px;
+      margin-bottom: 30px;
+      display: block;
+      opacity: 0.9;
+    }
+
+    .cover-tag {
+      display: inline-block;
+      border: 1.5px solid rgba(0, 245, 212, 0.5);
+      color: #00f5d4;
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      padding: 6px 20px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+    }
+
+    .cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 52pt;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .cover-title em {
+      font-style: italic;
+      color: #00f5d4;
+    }
+
+    .cover-subtitle {
+      font-size: 12pt;
+      color: rgba(224, 247, 255, 0.75);
+      max-width: 480px;
+      margin: 0 auto 50px;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .cover-divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00b4d8, transparent);
+      margin: 0 auto 50px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 50px;
+      justify-content: center;
+      font-size: 9pt;
+      color: rgba(224, 247, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .cover-meta strong {
+      display: block;
+      color: rgba(224, 247, 255, 0.9);
+      font-size: 10pt;
+      font-weight: 600;
+      margin-bottom: 3px;
+      letter-spacing: 1px;
+    }
+
+    .cover-footer {
+      padding: 24px 80px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8pt;
+      color: rgba(224, 247, 255, 0.4);
+    }
+
+    .cover-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 11pt;
+      color: #00b4d8;
+      letter-spacing: 2px;
+    }
+
+    /* ============================
+       TOC PAGE
+       ============================ */
+    .toc-page {
+      page-break-after: always;
+      padding: 70px 80px;
+    }
+
+    .toc-header {
+      margin-bottom: 40px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .toc-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22pt;
+      color: var(--ocean);
+    }
+
+    .toc-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f4f8;
+    }
+
+    .toc-num {
+      font-size: 9pt;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      min-width: 40px;
+    }
+
+    .toc-title {
+      font-size: 12pt;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .toc-dots {
+      flex: 1;
+      border-bottom: 1px dotted var(--border);
+      margin: 0 10px;
+      min-width: 30px;
+    }
+
+    .toc-page-num {
+      font-size: 10pt;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* ============================
+       CONTENT PAGES
+       ============================ */
+    .content-page {
+      page-break-after: always;
+      padding: 60px 80px;
+    }
+
+    .content-page:last-of-type {
+      page-break-after: auto;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .page-num-badge {
+      background: linear-gradient(135deg, var(--ocean), var(--cyan));
+      color: #fff;
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .page-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22pt;
+      color: var(--ocean);
+      line-height: 1.2;
+    }
+
+    .section-intro {
+      background: var(--light-cyan);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 28px;
+      font-size: 11pt;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .subsection {
+      margin-bottom: 26px;
+    }
+
+    .subsection h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 14pt;
+      color: var(--ocean-mid);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subsection h3 .icon {
+      font-size: 16pt;
+    }
+
+    .subsection p {
+      font-size: 11pt;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    .subsection strong { color: var(--ocean); }
+    .subsection em { color: var(--cyan); font-style: italic; }
+
+    /* Highlight box */
+    .highlight {
+      background: linear-gradient(135deg, rgba(0, 91, 142, 0.06), rgba(0, 180, 216, 0.06));
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 18px 0;
+    }
+
+    .highlight p {
+      font-size: 10.5pt;
+      color: var(--muted);
+    }
+
+    .highlight strong { color: var(--ocean); }
+
+    /* Two columns */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 18px 0;
+    }
+
+    .col-box {
+      background: #f7fbff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .col-box h4 {
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--ocean-mid);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .col-box p {
+      font-size: 9.5pt;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Quote */
+    .quote {
+      margin: 22px 0;
+      padding: 20px 28px;
+      background: linear-gradient(135deg, #001529, #003366);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .quote blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 12pt;
+      color: #e0f7ff;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .quote cite {
+      font-size: 9pt;
+      color: #00b4d8;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* ============================
+       LIST STYLES
+       ============================ */
+    ul.styled {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0;
+    }
+
+    ul.styled li {
+      padding: 6px 0 6px 22px;
+      position: relative;
+      font-size: 10.5pt;
+      color: var(--text);
+      border-bottom: 1px solid #f0f4f8;
+    }
+
+    ul.styled li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--cyan);
+      font-size: 9pt;
+    }
+
+    /* ============================
+       REFERENCES PAGE
+       ============================ */
+    .ref-page {
+      padding: 60px 80px;
+    }
+
+    .ref-page .page-header {
+      margin-bottom: 30px;
+    }
+
+    .ref-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0f4f8;
+    }
+
+    .ref-num {
+      background: linear-gradient(135deg, var(--ocean), var(--cyan));
+      color: #fff;
+      font-size: 9pt;
+      font-weight: 700;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .ref-content { flex: 1; }
+
+    .ref-year {
+      display: inline-block;
+      background: var(--light-cyan);
+      color: var(--ocean-mid);
+      font-size: 8pt;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+    }
+
+    .ref-journal {
+      font-size: 8.5pt;
+      color: var(--cyan);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .ref-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 11pt;
+      color: var(--text);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .ref-authors {
+      font-size: 9.5pt;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+
+    .ref-desc {
+      font-size: 9.5pt;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 5px;
+    }
+
+    .ref-url {
+      font-size: 8.5pt;
+      color: var(--cyan);
+      word-break: break-all;
+    }
+
+    /* ============================
+       PAGE FOOTER (all pages)
+       ============================ */
+    .page-foot {
+      position: fixed;
+      bottom: 20px;
+      left: 80px;
+      right: 80px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7.5pt;
+      color: #b0c4d8;
+      border-top: 1px solid #e8f0f7;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER PAGE -->
+  <div class="cover">
+    <div class="cover-top-bar"></div>
+    <div class="cover-body">
+      <span class="cover-deco">🐟</span>
+      <div class="cover-tag">Divulgación Científica · Biología Marina</div>
+      <h1 class="cover-title">
+        ¿Pueden<br/><em>pensar</em><br/>los peces?
+      </h1>
+      <p class="cover-subtitle">
+        Una revisión de la evidencia científica sobre inteligencia, autoconciencia,
+        vida social y capacidad de sufrimiento en peces.
+      </p>
+      <div class="cover-divider"></div>
+      <div class="cover-meta">
+        <div>
+          <strong>Año</strong>
+          2026
+        </div>
+        <div>
+          <strong>Idioma</strong>
+          Español
+        </div>
+        <div>
+          <strong>Categoría</strong>
+          Cognición Animal
+        </div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <span class="cover-brand">🐟 Jacinto</span>
+      <span>Basado en investigación científica publicada</span>
+    </div>
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc-page">
+    <div class="toc-header">
+      <h2>Tabla de Contenidos</h2>
+    </div>
+
+    <div class="toc-item">
+      <span class="toc-num">01</span>
+      <span class="toc-title">Inteligencia y Resolución de Problemas</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">3</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">02</span>
+      <span class="toc-title">Autoconciencia y Reconocimiento</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">4</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">03</span>
+      <span class="toc-title">Vida Social y Cooperación</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">5</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">04</span>
+      <span class="toc-title">¿Sienten Dolor? Sintiencia y Ética</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">6</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">05</span>
+      <span class="toc-title">Conclusión General</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">7</span>
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">06</span>
+      <span class="toc-title">Referencias y Fuentes Científicas</span>
+      <span class="toc-dots"></span>
+      <span class="toc-page-num">8</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: INTELIGENCIA -->
+  <div class="content-page">
+    <div class="page-header">
+      <span class="page-num-badge">01</span>
+      <h2>Inteligencia y Resolución de Problemas</h2>
+    </div>
+    <div class="section-intro">
+      Contrario al mito popular, los peces no tienen "tres segundos de memoria". La evidencia
+      científica demuestra capacidades cognitivas sorprendentes, incluyendo memoria a largo
+      plazo, uso de herramientas y construcción de mapas mentales del entorno.
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">🔨</span> Uso de Herramientas</h3>
+      <p>
+        Algunas especies de lábridos, como el <strong>Choerodon anchorago</strong>, utilizan
+        rocas del fondo marino como <strong>"yunques"</strong> para golpear conchas de bivalvos
+        y abrirlas. Este comportamiento implica selección deliberada de la roca adecuada,
+        transporte hasta el lugar de uso y golpes repetidos con precisión. El uso de herramientas
+        se consideraba antes una "línea roja" cognitiva que separaba a los animales superiores
+        de los inferiores, y los peces la han cruzado.
+      </p>
+    </div>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>🗺️ Mapas Mentales</h4>
+        <p>
+          Los peces de arrecife memorizan laberintos y rutas de escape complejas.
+          Pueden recordar el camino hacia su madriguera incluso meses después
+          de haberlo aprendido, utilizando referencias visuales del entorno.
+        </p>
+      </div>
+      <div class="col-box">
+        <h4>📅 Memoria a Largo Plazo</h4>
+        <p>
+          Estudios con truchas arcoíris demuestran que pueden retener información
+          aprendida durante <strong>meses</strong>, incluyendo la ubicación de
+          fuentes de alimento y el reconocimiento de individuos peligrosos.
+        </p>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p>
+        <strong>Dato clave:</strong> En experimentos de condicionamiento clásico, los peces
+        aprendieron a asociar estímulos visuales con recompensas de alimento y retuvieron
+        ese aprendizaje durante períodos de hasta <strong>12 meses</strong> sin refuerzo adicional.
+        La memoria de los peces es mucho más robusta y duradera de lo que se suponía históricamente.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 2: CONCIENCIA -->
+  <div class="content-page">
+    <div class="page-header">
+      <span class="page-num-badge">02</span>
+      <h2>Autoconciencia y Reconocimiento</h2>
+    </div>
+    <div class="section-intro">
+      La prueba del espejo es uno de los test más usados en etología cognitiva para evaluar
+      la autoconciencia. En 2019, un pez la superó por primera vez, revolucionando la comprensión
+      científica sobre la mente de los vertebrados acuáticos.
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">🪞</span> La Prueba del Espejo (Mark Test)</h3>
+      <p>
+        En 2019, el equipo liderado por <strong>Masanori Kohda</strong> de la Universidad
+        de Osaka demostró que el <strong>Pez Limpiador (Labroides dimidiatus)</strong> reconoce
+        su propio reflejo. Al colocarle una marca de color en una zona visible solo a través
+        del espejo, el pez intentó quitársela frotándose contra superficies, comportamiento
+        que indica que entendió que el reflejo era <em>él mismo y no otro individuo</em>.
+      </p>
+    </div>
+
+    <div class="highlight">
+      <p><strong>Animales que superan la prueba del espejo:</strong></p>
+      <ul class="styled">
+        <li>Humanos (a partir de los 18 meses)</li>
+        <li>Grandes simios (chimpancés, orangutanes, gorilas)</li>
+        <li>Delfines nariz de botella</li>
+        <li>Elefantes africanos</li>
+        <li><strong>Pez Limpiador — Labroides dimidiatus (2019)</strong></li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">👁️</span> Reconocimiento Facial</h3>
+      <p>
+        Investigaciones adicionales han demostrado que ciertas especies de peces, como el
+        <strong>pez arquero (Toxotes chatareus)</strong>, pueden <strong>distinguir entre
+        rostros humanos diferentes</strong> con una precisión de hasta el 81%. Esta capacidad
+        requiere un procesamiento visual sofisticado, comparable al de algunas aves y primates.
+      </p>
+    </div>
+
+    <div class="quote">
+      <blockquote>
+        "Si un pez puede pasar la prueba del espejo, necesitamos reconsiderar seriamente
+        lo que entendemos por autoconciencia y qué animales la poseen."
+      </blockquote>
+      <cite>— Kohda et al., PLOS Biology (2019)</cite>
+    </div>
+  </div>
+
+  <!-- SECTION 3: VIDA SOCIAL -->
+  <div class="content-page">
+    <div class="page-header">
+      <span class="page-num-badge">03</span>
+      <h2>Vida Social y Cooperación</h2>
+    </div>
+    <div class="section-intro">
+      Lejos de ser solitarios e instintivos, muchos peces tienen estructuras sociales
+      complejas, practican la cooperación entre especies distintas y exhiben
+      comportamientos que requieren un alto nivel de procesamiento cognitivo social.
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">🐟</span> Caza Cooperativa Interespecie</h3>
+      <p>
+        Uno de los hallazgos más extraordinarios en etología marina es la <strong>caza
+        cooperativa entre meros (Plectropomus pessuliferus) y morrenas gigantes
+        (Gymnothorax javanicus)</strong>. El mero "invita" activamente a la morrena
+        haciendo una señal de cabeza hacia el escondite de la presa. Cada especie aporta
+        sus habilidades únicas: el mero caza en aguas abiertas y la morrena en grietas y
+        recovecos. Este nivel de comunicación coordinada <em>entre especies totalmente
+        distintas</em> es extremadamente raro en el reino animal.
+      </p>
+    </div>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>🎭 Comportamiento Maquiavélico</h4>
+        <p>
+          Se ha observado a peces engañar deliberadamente a otros miembros de su grupo
+          para obtener alimento o mejores parejas. Esto requiere modelar mentalmente
+          las creencias de otro individuo (teoría de la mente).
+        </p>
+      </div>
+      <div class="col-box">
+        <h4>🌊 Cardúmenes Inteligentes</h4>
+        <p>
+          Los cardúmenes procesan información de forma distribuida, creando
+          comportamientos colectivos emergentes que optimizan la búsqueda de
+          alimento y confunden a los depredadores en tiempo real.
+        </p>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p>
+        <strong>Implicación cognitiva:</strong> Coordinar una caza con un individuo de
+        otra especie requiere que el pez entienda las capacidades y limitaciones de su
+        "compañero", una forma básica de <strong>teoría de la mente</strong> que hasta hace
+        poco se creía exclusiva de primates y algunas aves.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: DOLOR -->
+  <div class="content-page">
+    <div class="page-header">
+      <span class="page-num-badge">04</span>
+      <h2>¿Sienten Dolor? Sintiencia y Ética</h2>
+    </div>
+    <div class="section-intro">
+      Quizás la pregunta con mayores implicaciones prácticas: ¿experimentan los peces el
+      dolor de forma consciente o solo reaccionan de manera refleja? La investigación
+      actual apunta con firmeza a lo primero.
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">🔬</span> Nociceptores Confirmados</h3>
+      <p>
+        La Dra. <strong>Lynne Sneddon</strong> de la Universidad de Liverpool fue pionera
+        en demostrar que los peces poseen <strong>nociceptores</strong> (receptores de dolor)
+        de tipo A-delta y C, equivalentes a los encontrados en mamíferos. Estos receptores
+        están conectados a zonas cerebrales que procesan la información de manera compleja,
+        no solo refleja.
+      </p>
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">💊</span> Respuesta a Analgésicos</h3>
+      <p>
+        En experimentos controlados, cuando a peces que habían sufrido un estímulo doloroso
+        se les administraron <strong>analgésicos (morfina, lidocaína)</strong>, su comportamiento
+        cambió drásticamente: retomaron la actividad normal, volvieron a comer y dejaron de mostrar
+        comportamientos de aversión. Este cambio no ocurre en animales que solo tienen reflejos
+        simples, confirmando que existe una <em>experiencia subjetiva de sufrimiento</em>.
+      </p>
+    </div>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>🧬 El Palio: Alternativa a la Neocorteza</h4>
+        <p>
+          Los peces no tienen neocorteza, pero usan el <strong>palio lateral</strong>
+          para procesar emociones y aprendizaje complejo. Es un ejemplo de
+          <em>evolución convergente</em>: la naturaleza encontró otro camino
+          para llegar a la misma función cognitiva.
+        </p>
+      </div>
+      <div class="col-box">
+        <h4>⚖️ Implicaciones Éticas y Legales</h4>
+        <p>
+          Estos hallazgos están cambiando activamente las leyes de bienestar
+          animal. La Unión Europea reconoció en 2021 a los peces como seres
+          sintientes en su legislación, ampliando su protección legal de
+          forma significativa.
+        </p>
+      </div>
+    </div>
+
+    <div class="quote">
+      <blockquote>
+        "Los peces no son robots biológicos. Son seres capaces de aprender, recordar
+        y tomar decisiones basadas en su entorno, y experimentar el sufrimiento de
+        manera consciente."
+      </blockquote>
+      <cite>— Culum Brown, Animal Cognition (2015)</cite>
+    </div>
+  </div>
+
+  <!-- SECTION 5: CONCLUSION -->
+  <div class="content-page">
+    <div class="page-header">
+      <span class="page-num-badge">05</span>
+      <h2>Conclusión General</h2>
+    </div>
+    <div class="section-intro">
+      Décadas de investigación acumulada han transformado radicalmente la imagen científica
+      de los peces, pasando de ser considerados autómatas biológicos simples a seres con
+      una rica vida mental y social.
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">🧠</span> Resumen de Capacidades Documentadas</h3>
+      <ul class="styled">
+        <li><strong>Memoria a largo plazo:</strong> retención de información durante meses o años</li>
+        <li><strong>Uso de herramientas:</strong> selección y uso deliberado de objetos del entorno</li>
+        <li><strong>Autoconciencia:</strong> reconocimiento propio en el espejo (Labroides dimidiatus)</li>
+        <li><strong>Reconocimiento facial:</strong> distinción entre individuos humanos diferentes</li>
+        <li><strong>Cooperación interespecie:</strong> caza coordinada con señales gestuales</li>
+        <li><strong>Engaño social:</strong> manipulación de la percepción de otros individuos</li>
+        <li><strong>Percepción del dolor:</strong> experiencia consciente del sufrimiento, no solo reflejos</li>
+        <li><strong>Aprendizaje complejo:</strong> adaptación conductual basada en experiencias previas</li>
+      </ul>
+    </div>
+
+    <div class="highlight">
+      <p>
+        <strong>Evolución Convergente:</strong> El cerebro de los peces no tiene neocorteza,
+        la estructura que en mamíferos procesa el pensamiento superior. Sin embargo, el
+        <strong>palio lateral</strong> realiza funciones cognitivas equivalentes. Esto demuestra
+        que la inteligencia no es una característica única de un linaje evolutivo específico,
+        sino una solución que la evolución ha "descubierto" múltiples veces de forma independiente
+        para hacer frente a los desafíos del entorno.
+      </p>
+    </div>
+
+    <div class="subsection">
+      <h3><span class="icon">🌊</span> Perspectiva Futura</h3>
+      <p>
+        El estudio de la cognición en peces tiene implicaciones que van más allá de la biología
+        pura. A medida que la evidencia se acumula, está transformando la ética en la pesca
+        comercial y recreativa, la legislación de bienestar animal, el diseño de acuarios y
+        zoológicos, y nuestra comprensión filosófica de qué significa ser consciente. La pregunta
+        ya no es si los peces <em>pueden</em> pensar, sino <em>cuánto</em> piensan y
+        qué responsabilidades nos genera esa realidad.
+      </p>
+    </div>
+  </div>
+
+  <!-- REFERENCES PAGE -->
+  <div class="ref-page">
+    <div class="page-header">
+      <span class="page-num-badge">06</span>
+      <h2>Referencias y Fuentes Científicas</h2>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-num">1</div>
+      <div class="ref-content">
+        <span class="ref-year">2019</span>
+        <div class="ref-journal">PLOS Biology</div>
+        <div class="ref-title">Cleaner wrasse pass the mark test — implications for self-awareness</div>
+        <div class="ref-authors">Kohda, M., Hotta, T., Takeyama, T., et al.</div>
+        <div class="ref-desc">Demostró por primera vez que un pez (Labroides dimidiatus) reconoce su propio reflejo e intenta remover una marca visible solo a través del espejo, superando la prueba clásica de autoconciencia.</div>
+        <div class="ref-url">https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000021</div>
+      </div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-num">2</div>
+      <div class="ref-content">
+        <span class="ref-year">2015</span>
+        <div class="ref-journal">Animal Cognition</div>
+        <div class="ref-title">Fish intelligence, sentience and ethics</div>
+        <div class="ref-authors">Brown, C.</div>
+        <div class="ref-desc">Revisión exhaustiva de décadas de investigación sobre cognición en peces. Documenta memorias a largo plazo, vidas sociales complejas y estructuras cerebrales funcionalmente equivalentes a la corteza mamífera.</div>
+        <div class="ref-url">https://link.springer.com/article/10.1007/s10071-014-0761-0</div>
+      </div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-num">3</div>
+      <div class="ref-content">
+        <span class="ref-year">2006</span>
+        <div class="ref-journal">PLOS Biology</div>
+        <div class="ref-title">Interspecific Communicative and Coordinated Hunting between Groupers and Giant Moray Eels</div>
+        <div class="ref-authors">Bshary, R., Hohner, A., Ait-el-Djoudi, K., Fricke, H.</div>
+        <div class="ref-desc">Documenta la caza cooperativa entre meros y morrenas, con señales gestuales de cabeza para indicar la ubicación de presas escondidas. Una de las formas más complejas de comunicación interespecie conocidas.</div>
+        <div class="ref-url">https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040431</div>
+      </div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-num">4</div>
+      <div class="ref-content">
+        <span class="ref-year">2011</span>
+        <div class="ref-journal">Coral Reefs</div>
+        <div class="ref-title">Tool use in a western Pacific wrasse (Choerodon anchorago)</div>
+        <div class="ref-authors">Bernardi, G.</div>
+        <div class="ref-desc">Documentó el uso deliberado de rocas como yunques por parte del lábrido del Pacífico occidental para abrir almejas, confirmando el uso de herramientas en peces de manera objetiva.</div>
+        <div class="ref-url">https://link.springer.com/article/10.1007/s00338-011-0790-y</div>
+      </div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-num">5</div>
+      <div class="ref-content">
+        <span class="ref-year">Referencia</span>
+        <div class="ref-journal">Applied Animal Behaviour Science</div>
+        <div class="ref-title">Long-term memory in rainbow trout (Oncorhynchus mykiss)</div>
+        <div class="ref-authors">Varios autores</div>
+        <div class="ref-desc">Desmiente el mito de los tres segundos de memoria al documentar la retención de información aprendida durante periodos de hasta 12 meses en truchas arcoíris bajo condiciones controladas.</div>
+        <div class="ref-url">https://www.sciencedirect.com/journal/applied-animal-behaviour-science</div>
+      </div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-num">6</div>
+      <div class="ref-content">
+        <span class="ref-year">📖 Libro</span>
+        <div class="ref-journal">Cambridge University Press</div>
+        <div class="ref-title">Fish Cognition and Behavior (2nd Ed.)</div>
+        <div class="ref-authors">Brown, C. (Ed.), 2011</div>
+        <div class="ref-desc">Referencia académica fundamental sobre cognición en peces. Compila investigación de múltiples laboratorios mostrando que las capacidades cognitivas de los peces a menudo igualan o superan a las de vertebrados terrestres.</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
